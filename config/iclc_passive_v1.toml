@@ -1,0 +1,19 @@
+# Cell properties
+capacitance = 20.0 # uF/cm2, from Xu, 2015
+conductivities_2d = [0.013, 0.013] #x, y  #from Mat's code
+#conductivities_3d = [300.0, 300.0, 300.0] #x, y, z
+conductivities_3d = [0.0, 0.0, 0.0] #x, y, z
+
+#below moved to general parms file
+# Stimulus << shouldn't be used for passive...
+#magnitude = -1.3e3 # uA/cm2
+#period = 0.1 # ms
+#duration = 100.0 # ms
+#start_time = 100.0 # ms
+
+cell_id = 5
+
+# Cell parameters - this fails; the monodomain initialiser doesnt see these things...
+[parameters]
+Gpint = 0.2  #relaxation rate, nS
+V_r = -50.0   #resting Vm, mV

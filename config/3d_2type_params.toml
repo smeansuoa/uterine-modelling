@@ -1,0 +1,53 @@
+# General parameters
+save_dir = "monodomain_3d"
+mesh_name = "rat_uterus_idealised_10mm_4704_elem"
+mesh_dir = "/mesh/uterus/"
+stimulus_type = "zero"
+
+# Stimulus parameters
+#x_stim_start = -1.1
+#x_stim_end = 1.1
+#y_stim_start = -2.0
+#y_stim_end = 2.0
+#z_stim_start = -0.1
+#z_stim_end = 5.0
+
+#passive cell type region
+x_passive_start = -1.1
+x_passive_end = 1.1
+y_passive_start = -2.0
+y_passive_end = 2.0
+z_passive_start = -0.1
+z_passive_end = 2.0
+
+#probability a node is a passive cell
+prob_passive = 0.15
+
+#conductivity modifier parms
+#types are "linear" or "gaussian"
+#conductivity_mod_type = "linear"
+#conduct_mod_slope = -0.025
+#conduct_mod_max = 0.3
+conductivity_mod_type = "gaussian"
+conduct_mod_center = 0.0
+conduct_mod_steep = 0.2
+conduct_mod_min = 0.0
+
+# copied from cell parms file...
+#magnitude = -1.3e3 # uA/cm2
+magnitude = 0.0 # uA/cm2
+period = 0.1 # ms
+duration = 0.1 # ms
+start_time = 0.0 # ms
+
+# Time paramters in millisec
+sim_duration = 500.0
+ode_timestep = 0.1
+pde_timestep = 0.1
+print_timestep = 1.0
+
+# Cell parameters
+#use: Means, Tong, or iclc_passive_v1
+cell_type = "Means"
+#testing 2 cell types
+cell_type2 = "iclc_passive_v1"
