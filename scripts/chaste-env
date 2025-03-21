@@ -1,14 +1,21 @@
 MACHINE_NAME=$(uname -n)
 
 if [[ $MACHINE_NAME == "hpc"? ]]; then
-	export CHASTE_DIR="/people/mroe734/Chaste"
+<<<<<<< HEAD
+        export CHASTE_DIR="/people/mroe734/Chaste"
 else
-	export CHASTE_DIR="/home/mroe734/Chaste"
+        export CHASTE_DIR="/home/mroe734/Chaste"
+=======
+        export CHASTE_DIR="/home/chaste"
+else
+        export CHASTE_DIR="/home/chaste"
+>>>>>>> e06ae94 (Add build)
 fi
 
 export PATH=$PATH:${CHASTE_DIR}/scripts
 export CHASTE_SOURCE_DIR="${CHASTE_DIR}/src"
 export CHASTE_PROJECTS_DIR="${CHASTE_SOURCE_DIR}/projects"
+<<<<<<< HEAD
 export CHASTE_BUILD_DIR="${CHASTE_DIR}/lib"
 export CHASTE_TEST_OUTPUT="${CHASTE_DIR}/testoutput"
 export CHASTE_MODELLING_CONFIG_DIR="${CHASTE_DIR}/config/"
@@ -18,3 +25,16 @@ export APPTAINERENV_CHASTE_PROJECTS_DIR="${APPTAINERENV_CHASTE_SOURCE_DIR}/proje
 export APPTAINERENV_CHASTE_BUILD_DIR="${APPTAINERENV_CHASTE_DIR}/lib"
 export APPTAINERENV_CHASTE_TEST_OUTPUT="${APPTAINERENV_CHASTE_DIR}/testoutput"
 export CHASTE_MODELLING_CONFIG_DIR="${APPTAINERENV_CHASTE_DIR}/config/"
+=======
+#export CHASTE_BUILD_DIR="${CHASTE_DIR}/lib"
+export CHASTE_BUILD_DIR="${CHASTE_DIR}/build"
+export CHASTE_TEST_OUTPUT="${CHASTE_DIR}/testoutput"
+#export CHASTE_TEST_OUTPUT="${CHASTE_DIR}/Chaste/testoutput"
+export CHASTE_MODELLING_CONFIG_DIR="${CHASTE_DIR}/config/"
+#export APPTAINERENV_CHASTE_DIR=${CHASTE_DIR}
+#export APPTAINERENV_CHASTE_SOURCE_DIR="${APPTAINERENV_CHASTE_DIR}/src"
+#export APPTAINERENV_CHASTE_PROJECTS_DIR="${APPTAINERENV_CHASTE_SOURCE_DIR}/projects"
+#export APPTAINERENV_CHASTE_BUILD_DIR="${APPTAINERENV_CHASTE_DIR}/lib"
+#export APPTAINERENV_CHASTE_TEST_OUTPUT="${APPTAINERENV_CHASTE_DIR}/testoutput"
+#export CHASTE_MODELLING_CONFIG_DIR="${APPTAINERENV_CHASTE_DIR}/config/"
+>>>>>>> e06ae94 (Add build)
