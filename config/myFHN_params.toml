@@ -1,0 +1,43 @@
+#copied from Mat's FH parms file '0d_params'
+# Cell properties
+capacitance = 1.0 # uF/cm2
+conductivities_2d = [0.013, 0.013] #x, y
+conductivities_3d = [300.0, 300.0, 300.0] #x, y, z
+
+#slow_wave = false
+initial_conditions = [0.4, 0.4]
+start_time = 0.0
+end_time = 100.0
+timestep = 0.01
+sampling_step = 0.1
+
+[FHNBase]
+	myEpsilon = 0.2
+	myA = 3.0
+	myAlpha = 2.0
+	myGamma = 0.05
+	myV0 = 0.4
+	myW0 = 0.4
+	myIapp = 2.0
+
+#[FHNSlowWave]
+#	A = 1.0
+#	B = 2.0
+#	C = 2.0
+#	f = 16e-3
+#	beta = 0.0
+#	delta = 0.8
+#	epsilon = 0.115
+#	gamma = 0.1
+#	Istim = 0.0
+
+#FHNOriginal]
+#	A = 1.0
+#	B = 1.0
+#	C = 0.0
+#	f = 0.0
+#	beta = 0.1
+#	delta = 1.0
+#	epsilon = 0.1
+#	gamma = 0.25
+#	Istim = 100.0
