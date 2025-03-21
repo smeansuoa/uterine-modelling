@@ -6,8 +6,13 @@ conductivities_3d = [250.0, 250.0, 250.0] # x, y, z
 # Stimulus
 magnitude = -1.1e3 # uA/cm2
 period = 0.1 # ms
+<<<<<<< HEAD
 duration = 2000.0 # ms
 start_time = 1000.0 # ms
+=======
+duration = 100.0 # ms
+start_time = 200.0 # ms
+>>>>>>> e06ae94 (Add build)
 
 cell_id = 3
 
