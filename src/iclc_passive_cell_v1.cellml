@@ -1,0 +1,155 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model cmeta:id="iclc_passive" name="iclc_passive" xmlns="http://www.cellml.org/cellml/1.0#" xmlns:cellml="http://www.cellml.org/cellml/1.0#" xmlns:cmeta="http://www.cellml.org/metadata/1.0#">
+    <units name="millisecond">
+        <unit prefix="milli" units="second"/>
+    </units>
+    <units name="per_millisecond">
+        <unit exponent="-1" units="millisecond"/>
+    </units>
+    <units name="millivolt">
+        <unit prefix="milli" units="volt"/>
+    </units>
+    <units name="microF_per_cm2">
+        <unit prefix="micro" units="farad"/>
+        <unit exponent="-2" prefix="centi" units="metre"/>
+    </units>
+    <units name="microA_per_cm2">
+        <unit prefix="micro" units="ampere"/>
+        <unit exponent="-2" prefix="centi" units="metre"/>
+    </units>
+    <units name="milliS_per_cm2">
+        <unit prefix="milli" units="siemens"/>
+        <unit exponent="-2" prefix="centi" units="metre"/>
+    </units>
+    <units name="nanoA">
+        <unit prefix="nano" units="ampere"/>
+    </units>
+    <units name="nano_Siemens">
+        <unit prefix="nano" units="siemens"/>
+    </units>
+    <component name="environment">
+        <variable name="time" public_interface="out" units="millisecond"/>
+    </component>
+    <!-- Model - Parameters-->
+    <component name="parameters">
+        <variable cmeta:id="Gpint" initial_value="200.0" name="Gpint" public_interface="out" units="nano_Siemens"/>
+        <variable cmeta:id="V_r" initial_value="-20.0" name="V_r" public_interface="out" units="millivolt"/>
+    </component>
+    <component name="membrane">
+        <variable cmeta:id="membrane_voltage" initial_value="-10" name="V" public_interface="out" units="millivolt"/>
+        <variable cmeta:id="membrane_capacitance" initial_value="20.0" name="C" units="microF_per_cm2"/>
+        <variable cmeta:id="membrane_stimulus_current" initial_value="0.0" name="I_stim" units="microA_per_cm2"/>
+        <variable name="I_leak" public_interface="in" units="nanoA"/>
+        <!--var {Gp_int} Gp_int: nano_Siemens {init: 0.2};
+var {V_r} V_r: millivolt {init: -50.0};-->
+        <variable name="time" public_interface="in" units="millisecond"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>V</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <minus/>
+                            <ci>I_leak</ci>
+                        </apply>
+                        <ci>I_stim</ci>
+                    </apply>
+                    <ci>C</ci>
+                </apply>
+            </apply>
+        </math>
+        <!--ode(V, time) = Gp_int*(V_r-V)/C;-->
+    </component>
+    <group>
+        <relationship_ref relationship="containment"/>
+        <component_ref component="membrane">
+            <!--comp Ca_channel;
+comp K_channel;
+comp KCa_channel;-->
+            <component_ref component="leak_channel"/>
+        </component_ref>
+    </group>
+    <!--call the relaxation term I_leak to make chaste happy-->
+    <component name="leak_channel">
+        <variable name="V" public_interface="in" units="millivolt"/>
+        <variable name="I_leak" public_interface="out" units="nanoA"/>
+        <variable name="Gpint" public_interface="in" units="nano_Siemens"/>
+        <variable name="V_r" public_interface="in" units="millivolt"/>
+        <!--below just for fooling chaste cellml conversion
+complains about 'unused variable' otherwise-->
+        <!--var fake_act_var: dimensionless;
+var fake_half_act: millivolt {init: -25.0};-->
+        <!--fake_act_var = 0.5{dimensionless}*V/(V-fake_half_act);
+note: if you _add_ fake_act_var to the desired leak term, the python converter for chaste barfs
+"TypeError: Invalid comparison of non-real zoo" somehow the string 'zoo' appears...?!
+I_leak = fake_act_var*Gp_int*(V - V_r);-->
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>I_leak</ci>
+                <apply>
+                    <times/>
+                    <ci>Gpint</ci>
+                    <apply>
+                        <minus/>
+                        <ci>V</ci>
+                        <ci>V_r</ci>
+                    </apply>
+                </apply>
+            </apply>
+        </math>
+    </component>
+    <connection>
+        <map_components component_1="environment" component_2="membrane"/>
+        <map_variables variable_1="time" variable_2="time"/>
+    </connection>
+    <connection>
+        <map_components component_1="membrane" component_2="leak_channel"/>
+        <map_variables variable_1="V" variable_2="V"/>
+        <map_variables variable_1="I_leak" variable_2="I_leak"/>
+    </connection>
+    <connection>
+        <map_components component_1="leak_channel" component_2="parameters"/>
+        <map_variables variable_1="Gpint" variable_2="Gpint"/>
+        <map_variables variable_1="V_r" variable_2="V_r"/>
+    </connection>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+        <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="#membrane_voltage">
+            <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" rdf:resource="https://chaste.comlab.ox.ac.uk/cellml/ns/oxford-metadata#membrane_voltage" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+        </rdf:Description>
+    </rdf:RDF>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+        <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="#membrane_capacitance">
+            <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" rdf:resource="https://chaste.comlab.ox.ac.uk/cellml/ns/oxford-metadata#membrane_capacitance" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+        </rdf:Description>
+    </rdf:RDF>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+        <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="#membrane_stimulus_current">
+            <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" rdf:resource="https://chaste.comlab.ox.ac.uk/cellml/ns/oxford-metadata#membrane_stimulus_current" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+        </rdf:Description>
+    </rdf:RDF>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+        <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="#membrane_voltage">
+            <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" rdf:resource="https://chaste.comlab.ox.ac.uk/cellml/ns/oxford-metadata#membrane_voltage" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+        </rdf:Description>
+    </rdf:RDF>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+        <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="#Gpint">
+            <modifiable-parameter xmlns="https://chaste.comlab.ox.ac.uk/cellml/ns/pycml#">yes</modifiable-parameter>
+        </rdf:Description>
+    </rdf:RDF>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+        <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="#V_r">
+            <modifiable-parameter xmlns="https://chaste.comlab.ox.ac.uk/cellml/ns/pycml#">yes</modifiable-parameter>
+        </rdf:Description>
+    </rdf:RDF>
+</model>
