@@ -1,6 +1,7 @@
 # Cell properties
 capacitance = 1.0 # uF/cm2
 conductivities_2d = [0.013, 0.013] #x, y
+<<<<<<< HEAD
 conductivities_3d = [300.0, 300.0, 300.0] #x, y, z
 
 # Stimulus
@@ -8,6 +9,17 @@ magnitude = -1.3e3 # uA/cm2
 period = 0.1 # ms
 duration = 2000.0 # ms
 start_time = 1000.0 # ms
+=======
+#conductivities_3d = [300.0, 300.0, 300.0] #x, y, z
+conductivities_3d = [0.0, 0.0, 0.0] #x, y, z
+
+#below moved to general parms file
+# Stimulus
+#magnitude = -1.1e3 # uA/cm2
+#period = 0.1 # ms
+#duration = 100.0 # ms
+#start_time = 200.0 # ms
+>>>>>>> e06ae94 (Add build)
 
 cell_id = 2
 
@@ -15,6 +27,10 @@ cell_id = 2
 [parameters]
    gna = 0.0895 # 0.0895 range 0.028 - 0.125
    beta = 0.015 # 0.015
+<<<<<<< HEAD
+=======
+   #gk1 = 0.52 # 0.7 range 0.52 - 0.85
+>>>>>>> e06ae94 (Add build)
    gkv43 = 0.52 # 0.7 range 0.52 - 0.85
    gcal = 0.8 # 0.6
    gcat = 0.058 # 0.058
