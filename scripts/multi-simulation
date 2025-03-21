@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 if [[ $# -ne 2 ]]; then
-	echo "usage: multi-simulation <dim> <nb-runs>"
-	exit
+        echo "usage: multi-simulation <dim> <nb-runs>"
+        exit
 fi
 
 DIM=$1
@@ -11,22 +11,26 @@ I=0
 NAME=$(uname -n)
 
 if [[ $NAME == "hpc"? ]]; then
-	source ~/Chaste/scripts/chaste-env
+        source ~/Chaste/scripts/chaste-env
 fi
 
 while [[ $I -ne $NB_RUNS ]];
 do
-	# Run simulation
-	echo "Running simulation $I" >&2
-	${CHASTE_DIR}/scripts/uterine-simulation ${DIM} > ${CHASTE_DIR}/tmp.log
+        # Run simulation
+        echo "Running simulation $I" >&2
+<<<<<<< HEAD
+        ${CHASTE_DIR}/scripts/uterine-simulation ${DIM} > ${CHASTE_DIR}/tmp.log
+=======
+        ${CHASTE_DIR}/scripts/chaste-simulation ${DIM} > ${CHASTE_DIR}/tmp.log
+>>>>>>> e06ae94 (Add build)
 
-	# Save simulation times
-	$(echo Simulation $I >> ${CHASTE_DIR}/times.log)
-	$(cat tmp.log | grep Total >> ${CHASTE_DIR}/times.log)
-	$(cat tmp.log | grep seconds >> ${CHASTE_DIR}/times.log)
+        # Save simulation times
+        $(echo Simulation $I >> ${CHASTE_DIR}/times.log)
+        $(cat tmp.log | grep Total >> ${CHASTE_DIR}/times.log)
+        $(cat tmp.log | grep seconds >> ${CHASTE_DIR}/times.log)
 
-	# Increase counter
-	I=$((${I} + 1))
+        # Increase counter
+        I=$((${I} + 1))
 done
 
 rm tmp.log
